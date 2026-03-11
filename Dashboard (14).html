@@ -573,6 +573,113 @@
         .owner-del-btn { padding: 4px 10px; background: rgba(200,50,200,.15); color: #e090ff; border: 1px solid rgba(200,50,200,.3); border-radius: 6px; font-size: .72rem; font-weight: 700; cursor: pointer; font-family: inherit; }
         .owner-del-btn:hover { background: rgba(200,50,200,.3); }
 
+        /* ========== TOOL MODALS ========== */
+        .tool-overlay {
+            position: fixed; inset: 0; z-index: 700;
+            background: rgba(0,0,0,.75);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity .25s;
+        }
+        .tool-overlay.open { opacity: 1; pointer-events: auto; }
+        .tool-box {
+            background: rgba(20,20,30,.95);
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 18px; padding: 22px 24px;
+            width: min(92vw, 420px); max-height: 85vh; overflow-y: auto;
+            box-shadow: 0 16px 60px rgba(0,0,0,.7);
+            animation: floatIn .25s ease;
+            backdrop-filter: blur(14px);
+        }
+        .tool-close {
+            display: block; margin: 0 0 12px auto;
+            padding: 6px 14px; background: rgba(230,57,70,.2);
+            color: #e63946; border: 1px solid rgba(230,57,70,.35);
+            border-radius: 8px; cursor: pointer; font-weight: 700;
+            font-size: .78rem; font-family: inherit; transition: all .18s;
+        }
+        .tool-close:hover { background: rgba(230,57,70,.45); }
+        .t-input {
+            width: 100%; padding: 10px 14px;
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+            border-radius: 10px; color: #fff; font-family: inherit;
+            font-size: .88rem; outline: none; transition: border-color .2s;
+        }
+        .t-input:focus { border-color: rgba(255,200,0,.5); }
+
+        /* Calculator */
+        .calc-screen {
+            background: rgba(0,0,0,.5); color: #ffc800;
+            font-size: 1.6rem; font-weight: 700;
+            padding: 14px 16px; border-radius: 12px;
+            text-align: right; margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,.1);
+            word-break: break-all; min-height: 52px;
+        }
+        .calc-pad {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+        }
+        .calc-key {
+            padding: 12px 6px; font-size: 1rem; font-weight: 700;
+            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+            border-radius: 9px; color: #fff; cursor: pointer;
+            font-family: inherit; transition: all .15s;
+        }
+        .calc-key:hover { background: rgba(255,255,255,.25); }
+        .calc-key.op { background: rgba(255,200,0,.2); color: #ffc800; border-color: rgba(255,200,0,.3); }
+        .calc-key.op:hover { background: rgba(255,200,0,.4); }
+        .calc-key.eq { grid-column: span 1; background: rgba(63,200,120,.25); color: #3fc878; border-color: rgba(63,200,120,.4); }
+        .calc-key.eq:hover { background: rgba(63,200,120,.45); }
+
+        /* Notes */
+        .note-item {
+            background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
+            color: rgba(255,255,255,.8); font-size: .84rem;
+            word-break: break-word;
+        }
+        .note-date {
+            font-size: .68rem; color: rgba(255,255,255,.35);
+            margin-top: 6px;
+        }
+        .note-list { max-height: 250px; overflow-y: auto; }
+
+        /* Timer */
+        .timer-face {
+            font-size: 3rem; font-weight: 800; color: #ffc800;
+            text-align: center; padding: 18px 0;
+            text-shadow: 0 0 20px rgba(255,200,0,.4);
+        }
+
+        /* Toast notification */
+        .notif-toast {
+            position: fixed; bottom: 24px; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(20,20,30,.92);
+            border: 1px solid rgba(255,200,0,.35);
+            color: #fff; padding: 10px 22px;
+            border-radius: 12px; font-size: .85rem; font-weight: 600;
+            z-index: 900; pointer-events: none;
+            animation: floatIn .3s ease, fadeOut .4s ease 2.5s forwards;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 6px 24px rgba(0,0,0,.5);
+        }
+        @keyframes fadeOut { to { opacity: 0; transform: translateX(-50%) translateY(10px); } }
+
+        /* Confetti */
+        .confetti-bit {
+            position: fixed; top: -10px;
+            width: 8px; height: 8px;
+            border-radius: 2px; z-index: 850;
+            pointer-events: none;
+            animation: confettiFall 3s ease-in forwards;
+        }
+
+        /* Lock hint */
+        .lock-hint {
+            font-size: .6rem; color: rgba(255,255,255,.3);
+            white-space: nowrap; flex-shrink: 0; padding: 0 2px;
+        }
+
         @media (max-width: 850px) { .chat-panel { display: none; } }
         @media (max-width: 700px) {
             #main-content { padding: 50px 8px 8px; }
@@ -1443,19 +1550,9 @@ document.addEventListener('keydown', function(e) {
 //  CODEHS FIREBASE LIVE CHAT — Full Feature Set
 // ═══════════════════════════════════════════════════════════
 
-const SHARED_PROJECT = 'mangoblox-chat-v1';
 const OWNER_NAME     = 'FireTube91';
 const RESERVED_NAMES = ['firetube91','admin','system','owner','mod','moderator'];
-const MY_TAB         = 'tab_' + Math.random().toString(36).slice(2,8);
 const CHAT_ROOMS     = { mango:'rooms/mango', frosty:'rooms/frosty', cheese:'rooms/cheese' };
-
-let fbDb = null;
-let chatUser = null;
-let chatDisplayName = '';
-let chatOnlineInterval = null;
-let authMode = 'login';
-let chatExpanded = false;
-let pendingAttach = null;
 
 // per-channel state
 let activeRoom = 'mango';
@@ -2470,17 +2567,6 @@ function getAllGames() {
 }
 
 
-// ─────────────────────────────────────────────
-//  chat sub-tab switcher
-// ─────────────────────────────────────────────
-function switchChatTab(tab) {
-    const isChat = tab === 'chat';
-    document.getElementById('stab-chat').classList.toggle('active', isChat);
-    document.getElementById('stab-vc').classList.toggle('active', !isChat);
-    document.getElementById('chatContent').style.display = isChat ? 'flex' : 'none';
-    document.getElementById('vcContent').classList.toggle('active', !isChat);
-
-}
 
 // ─────────────────────────────────────────────
 //  chat panel — drag to resize
