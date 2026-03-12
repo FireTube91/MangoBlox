@@ -531,8 +531,16 @@
         .send-btn:hover { background: rgba(255,200,0,.55); transform: scale(1.05); }
 
         /* Video call */
+        .vc-tile { position: relative; }
         .vc-pane { flex: 1; display: none; flex-direction: column; overflow: hidden; }
         .vc-pane.active { display: flex; }
+        .vc-tile-emoji {
+            position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+            font-size: 2rem; z-index: 5; pointer-events: none;
+            animation: floatIn .3s ease;
+        }
+        .vc-btn.off { background: rgba(230,57,70,.3); border-color: rgba(230,57,70,.5); }
+        .vc-btn.on  { background: rgba(100,220,120,.3); border-color: rgba(100,220,120,.5); }
         .vc-status { padding: 8px 10px; font-size: .72rem; color: rgba(255,255,255,.5); text-align: center; flex-shrink: 0; border-bottom: 1px solid rgba(255,255,255,.07); }
         .vc-status.in-call { color: #3fc878; }
         .vc-grid { flex: 1; overflow-y: auto; padding: 8px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-content: start; }
@@ -573,113 +581,6 @@
         .owner-del-btn { padding: 4px 10px; background: rgba(200,50,200,.15); color: #e090ff; border: 1px solid rgba(200,50,200,.3); border-radius: 6px; font-size: .72rem; font-weight: 700; cursor: pointer; font-family: inherit; }
         .owner-del-btn:hover { background: rgba(200,50,200,.3); }
 
-        /* ========== TOOL MODALS ========== */
-        .tool-overlay {
-            position: fixed; inset: 0; z-index: 700;
-            background: rgba(0,0,0,.75);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity .25s;
-        }
-        .tool-overlay.open { opacity: 1; pointer-events: auto; }
-        .tool-box {
-            background: rgba(20,20,30,.95);
-            border: 1px solid rgba(255,255,255,.15);
-            border-radius: 18px; padding: 22px 24px;
-            width: min(92vw, 420px); max-height: 85vh; overflow-y: auto;
-            box-shadow: 0 16px 60px rgba(0,0,0,.7);
-            animation: floatIn .25s ease;
-            backdrop-filter: blur(14px);
-        }
-        .tool-close {
-            display: block; margin: 0 0 12px auto;
-            padding: 6px 14px; background: rgba(230,57,70,.2);
-            color: #e63946; border: 1px solid rgba(230,57,70,.35);
-            border-radius: 8px; cursor: pointer; font-weight: 700;
-            font-size: .78rem; font-family: inherit; transition: all .18s;
-        }
-        .tool-close:hover { background: rgba(230,57,70,.45); }
-        .t-input {
-            width: 100%; padding: 10px 14px;
-            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
-            border-radius: 10px; color: #fff; font-family: inherit;
-            font-size: .88rem; outline: none; transition: border-color .2s;
-        }
-        .t-input:focus { border-color: rgba(255,200,0,.5); }
-
-        /* Calculator */
-        .calc-screen {
-            background: rgba(0,0,0,.5); color: #ffc800;
-            font-size: 1.6rem; font-weight: 700;
-            padding: 14px 16px; border-radius: 12px;
-            text-align: right; margin-bottom: 12px;
-            border: 1px solid rgba(255,255,255,.1);
-            word-break: break-all; min-height: 52px;
-        }
-        .calc-pad {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
-        }
-        .calc-key {
-            padding: 12px 6px; font-size: 1rem; font-weight: 700;
-            background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
-            border-radius: 9px; color: #fff; cursor: pointer;
-            font-family: inherit; transition: all .15s;
-        }
-        .calc-key:hover { background: rgba(255,255,255,.25); }
-        .calc-key.op { background: rgba(255,200,0,.2); color: #ffc800; border-color: rgba(255,200,0,.3); }
-        .calc-key.op:hover { background: rgba(255,200,0,.4); }
-        .calc-key.eq { grid-column: span 1; background: rgba(63,200,120,.25); color: #3fc878; border-color: rgba(63,200,120,.4); }
-        .calc-key.eq:hover { background: rgba(63,200,120,.45); }
-
-        /* Notes */
-        .note-item {
-            background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.1);
-            border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
-            color: rgba(255,255,255,.8); font-size: .84rem;
-            word-break: break-word;
-        }
-        .note-date {
-            font-size: .68rem; color: rgba(255,255,255,.35);
-            margin-top: 6px;
-        }
-        .note-list { max-height: 250px; overflow-y: auto; }
-
-        /* Timer */
-        .timer-face {
-            font-size: 3rem; font-weight: 800; color: #ffc800;
-            text-align: center; padding: 18px 0;
-            text-shadow: 0 0 20px rgba(255,200,0,.4);
-        }
-
-        /* Toast notification */
-        .notif-toast {
-            position: fixed; bottom: 24px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(20,20,30,.92);
-            border: 1px solid rgba(255,200,0,.35);
-            color: #fff; padding: 10px 22px;
-            border-radius: 12px; font-size: .85rem; font-weight: 600;
-            z-index: 900; pointer-events: none;
-            animation: floatIn .3s ease, fadeOut .4s ease 2.5s forwards;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 6px 24px rgba(0,0,0,.5);
-        }
-        @keyframes fadeOut { to { opacity: 0; transform: translateX(-50%) translateY(10px); } }
-
-        /* Confetti */
-        .confetti-bit {
-            position: fixed; top: -10px;
-            width: 8px; height: 8px;
-            border-radius: 2px; z-index: 850;
-            pointer-events: none;
-            animation: confettiFall 3s ease-in forwards;
-        }
-
-        /* Lock hint */
-        .lock-hint {
-            font-size: .6rem; color: rgba(255,255,255,.3);
-            white-space: nowrap; flex-shrink: 0; padding: 0 2px;
-        }
-
         @media (max-width: 850px) { .chat-panel { display: none; } }
         @media (max-width: 700px) {
             #main-content { padding: 50px 8px 8px; }
@@ -687,6 +588,7 @@
         }
     </style>
     <script src="https://static1.codehs.com/cdn/chsfirebase/latest/chsfirebase.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body>
 
@@ -927,6 +829,9 @@
                 <div class="vc-controls">
                     <button class="vc-btn vc-btn-join" id="vcJoinBtn" onclick="vcJoin()">📹 Join Call</button>
                     <button class="vc-btn vc-btn-cam" id="vcCamBtn" onclick="vcToggleCam()" style="display:none">📷 Cam On</button>
+                    <button class="vc-btn" id="vcMicBtn" onclick="vcToggleMic()" style="display:none">🎤 Mic On</button>
+                    <button class="vc-btn" id="vcScreenBtn" onclick="vcToggleScreen()" style="display:none">🖥️ Share Screen</button>
+                    <button class="vc-btn" id="vcHandBtn" onclick="vcToggleHand()" style="display:none">✋ Hand</button>
                     <button class="vc-btn vc-btn-leave" id="vcLeaveBtn" onclick="vcLeave()" style="display:none">📵 Leave</button>
                     <div class="vc-peer-count" id="vcPeerCount">👥 Nobody in call yet</div>
                 </div>
@@ -993,14 +898,8 @@ let savedNotes = JSON.parse(localStorage.getItem('mb_notes') || '[]');
 let pendingAttach = null;   // { dataURL, name, type }
 
 // ─────────────────────────────────────────────
-//  CodeHS Firebase config
+//  chat state (constants declared below in chat section)
 // ─────────────────────────────────────────────
-const SHARED_PROJECT = 'mangoblox-chat-v1';
-
-// ─────────────────────────────────────────────
-//  chat state
-// ─────────────────────────────────────────────
-const MY_TAB = 'tab_' + Math.random().toString(36).slice(2,8);
 let fbDb = null;              // CodeHS database instance
 let chatUser = null;          // { uid, displayName, passwordHash }
 let chatDisplayName = '';
@@ -1550,9 +1449,19 @@ document.addEventListener('keydown', function(e) {
 //  CODEHS FIREBASE LIVE CHAT — Full Feature Set
 // ═══════════════════════════════════════════════════════════
 
+const SHARED_PROJECT = 'mangoblox-chat-v1';
 const OWNER_NAME     = 'FireTube91';
 const RESERVED_NAMES = ['firetube91','admin','system','owner','mod','moderator'];
+const MY_TAB         = 'tab_' + Math.random().toString(36).slice(2,8);
 const CHAT_ROOMS     = { mango:'rooms/mango', frosty:'rooms/frosty', cheese:'rooms/cheese' };
+
+let fbDb = null;
+let chatUser = null;
+let chatDisplayName = '';
+let chatOnlineInterval = null;
+let authMode = 'login';
+let chatExpanded = false;
+let pendingAttach = null;
 
 // per-channel state
 let activeRoom = 'mango';
@@ -2567,6 +2476,17 @@ function getAllGames() {
 }
 
 
+// ─────────────────────────────────────────────
+//  chat sub-tab switcher
+// ─────────────────────────────────────────────
+function switchChatTab(tab) {
+    const isChat = tab === 'chat';
+    document.getElementById('stab-chat').classList.toggle('active', isChat);
+    document.getElementById('stab-vc').classList.toggle('active', !isChat);
+    document.getElementById('chatContent').style.display = isChat ? 'flex' : 'none';
+    document.getElementById('vcContent').classList.toggle('active', !isChat);
+
+}
 
 // ─────────────────────────────────────────────
 //  chat panel — drag to resize
@@ -2610,26 +2530,36 @@ function initChatResize() {
 }
 
 // ═══════════════════════════════════════════════════════════
-//  VIDEO CALL — MiroTalk P2P iframe (no server code needed)
+//  VIDEO CALL — Native WebRTC via MangoBlox Railway server
+//  Server: mangoblox-server-production.up.railway.app
+//  Fallback chat backup: same server (Socket.IO)
 // ═══════════════════════════════════════════════════════════
 
-let vcInCall    = false;
-let vcCamOn     = true;
-let localStream = null;
-let vcPeers     = {};
-const vcNickMap  = {};
-const vcIceQueue = {};
+const VC_SERVER   = 'https://mangoblox-server-production.up.railway.app';
+const VC_ROOM_ID  = 'mangoblox-main';
 
-// ── Peer count ──────────────────────────────────────────────
-function vcUpdatePeerCount(n) {
-    const el = document.getElementById('vcPeerCount');
-    if (!el) return;
-    if (!n || n <= 0)  el.textContent = '👥 Nobody in call yet — be the first!';
-    else if (n === 1)  el.textContent = '👥 1 person in call';
-    else               el.textContent = '👥 ' + n + ' people in call';
-}
+const ICE_SERVERS = [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+    { urls: 'stun:openrelay.metered.ca:80' },
+    { urls: 'turn:openrelay.metered.ca:80',      username: 'openrelayproject', credential: 'openrelayproject' },
+    { urls: 'turn:openrelay.metered.ca:443',     username: 'openrelayproject', credential: 'openrelayproject' },
+    { urls: 'turn:openrelay.metered.ca:443?transport=tcp', username: 'openrelayproject', credential: 'openrelayproject' },
+];
 
-// ── Status bar ──────────────────────────────────────────────
+let vcSocket      = null;   // Socket.IO connection
+let vcInCall      = false;
+let vcCamOn       = true;
+let vcMicOn       = true;
+let vcHandRaised  = false;
+let vcScreenOn    = false;
+let localStream   = null;
+let screenStream  = null;
+let vcPeers       = {};     // socketId → RTCPeerConnection
+const vcNickMap   = {};     // socketId → name
+const vcIceQueue  = {};     // socketId → ICE candidates queued before remote desc set
+
+// ── Status / peer-count UI ──────────────────────────────────
 function vcSetStatus(txt, inCall) {
     const el = document.getElementById('vcStatus');
     if (!el) return;
@@ -2637,120 +2567,296 @@ function vcSetStatus(txt, inCall) {
     el.className   = 'vc-status' + (inCall ? ' in-call' : '');
 }
 
-// ── Join ────────────────────────────────────────────────────
+function vcUpdatePeerCount() {
+    const n  = Object.keys(vcPeers).length;
+    const el = document.getElementById('vcPeerCount');
+    if (!el) return;
+    if (n === 0) el.textContent = '👥 Only you in the call';
+    else if (n === 1) el.textContent = '👥 1 other in call';
+    else el.textContent = '👥 ' + n + ' others in call';
+}
+
+// ── Connect socket (lazy) ───────────────────────────────────
+function vcConnectSocket() {
+    if (vcSocket && vcSocket.connected) return;
+    vcSocket = io(VC_SERVER, { transports: ['websocket', 'polling'], reconnectionAttempts: 8 });
+
+    vcSocket.on('connect', function() {
+        console.log('[vc] connected to server', vcSocket.id);
+        if (vcInCall) vcDoJoin();   // rejoin after reconnect
+    });
+
+    vcSocket.on('connect_error', function(e) {
+        console.warn('[vc] connect error', e.message);
+        vcSetStatus('⚠️ Connection error — retrying…', false);
+    });
+
+    // ── Room events ─────────────────────────────────────────
+    vcSocket.on('join-ack', function(data) {
+        vcSetStatus('📹 In call · ' + (data.peer ? data.peer.name : ''), true);
+        // Initiate offers to all existing peers
+        (data.room && data.room.peers || []).forEach(function(p) {
+            if (p.socketId !== vcSocket.id) vcInitiateOffer(p.socketId, p.name);
+        });
+        vcUpdatePeerCount();
+    });
+
+    vcSocket.on('peer-joined', function(data) {
+        const p = data.peer;
+        vcNickMap[p.socketId] = p.name;
+        toast('📹 ' + p.name + ' joined the call');
+        // Don't initiate — wait for them to offer us (they get join-ack with our id)
+        vcUpdatePeerCount();
+    });
+
+    vcSocket.on('peer-left', function(data) {
+        toast('📵 ' + (vcNickMap[data.socketId] || 'Someone') + ' left the call');
+        vcClosePeer(data.socketId);
+        vcUpdatePeerCount();
+    });
+
+    // ── WebRTC signaling ────────────────────────────────────
+    vcSocket.on('offer', async function(data) {
+        const pc = vcGetOrCreatePeer(data.from);
+        try {
+            await pc.setRemoteDescription(new RTCSessionDescription({ type: 'offer', sdp: data.sdp }));
+            await vcDrainIce(data.from);
+            const answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+            vcSocket.emit('answer', { to: data.from, sdp: pc.localDescription.sdp });
+        } catch(e) { console.error('[vc] offer handling error', e); }
+    });
+
+    vcSocket.on('answer', async function(data) {
+        const pc = vcPeers[data.from];
+        if (!pc) return;
+        try {
+            await pc.setRemoteDescription(new RTCSessionDescription({ type: 'answer', sdp: data.sdp }));
+            await vcDrainIce(data.from);
+        } catch(e) { console.error('[vc] answer error', e); }
+    });
+
+    vcSocket.on('ice-candidate', async function(data) {
+        if (!data.candidate) return;
+        const pc = vcPeers[data.from];
+        if (!pc || !pc.remoteDescription) {
+            if (!vcIceQueue[data.from]) vcIceQueue[data.from] = [];
+            vcIceQueue[data.from].push(data.candidate);
+            return;
+        }
+        try { await pc.addIceCandidate(new RTCIceCandidate(data.candidate)); }
+        catch(e) { console.warn('[vc] ICE add error', e); }
+    });
+
+    vcSocket.on('renegotiate', async function(data) {
+        const pc = vcPeers[data.from];
+        if (!pc || !data.sdp) return;
+        try {
+            await pc.setRemoteDescription(new RTCSessionDescription({ type: 'offer', sdp: data.sdp }));
+            const answer = await pc.createAnswer();
+            await pc.setLocalDescription(answer);
+            vcSocket.emit('answer', { to: data.from, sdp: pc.localDescription.sdp });
+        } catch(e) { console.error('[vc] renegotiate error', e); }
+    });
+
+    // ── Peer info updates ───────────────────────────────────
+    vcSocket.on('peer-info-updated', function(data) {
+        if (data.name) vcNickMap[data.socketId] = data.name;
+        const lbl = document.querySelector('#vc-tile-' + data.socketId + ' .vc-tile-label');
+        if (lbl && data.name) lbl.textContent = data.name;
+    });
+
+    vcSocket.on('peer-screen-share-start', function(data) {
+        toast('🖥️ ' + (vcNickMap[data.socketId] || data.name || 'Someone') + ' is sharing their screen');
+        const lbl = document.querySelector('#vc-tile-' + data.socketId + ' .vc-tile-label');
+        if (lbl) lbl.textContent = (vcNickMap[data.socketId] || data.name || '') + ' 🖥️';
+    });
+
+    vcSocket.on('peer-screen-share-stop', function(data) {
+        const lbl = document.querySelector('#vc-tile-' + data.socketId + ' .vc-tile-label');
+        if (lbl) lbl.textContent = vcNickMap[data.socketId] || 'Peer';
+    });
+
+    vcSocket.on('peer-reaction', function(data) {
+        toast(data.emoji + ' ' + (data.name || 'Someone'));
+        vcFloatEmoji(data.socketId, data.emoji);
+    });
+
+    vcSocket.on('peer-hand-raise', function(data) {
+        toast('✋ ' + (data.name || 'Someone') + ' raised their hand');
+    });
+
+    vcSocket.on('force-mute', function() {
+        if (vcMicOn) vcToggleMic();
+        toast('🔇 You were muted by the host');
+    });
+
+    vcSocket.on('kicked', function(data) {
+        toast('🚫 ' + (data.reason || 'You were removed'));
+        vcLeave();
+    });
+
+    vcSocket.on('meeting-ended', function(data) {
+        toast('🔴 ' + (data.reason || 'Meeting ended'));
+        vcLeave();
+    });
+
+    vcSocket.on('disconnect', function(reason) {
+        console.warn('[vc] disconnected:', reason);
+        if (vcInCall) vcSetStatus('⚠️ Reconnecting…', true);
+    });
+}
+
+// ── RTCPeerConnection factory ───────────────────────────────
+function vcGetOrCreatePeer(remoteId) {
+    if (vcPeers[remoteId]) return vcPeers[remoteId];
+
+    const pc = new RTCPeerConnection({ iceServers: ICE_SERVERS });
+    vcPeers[remoteId] = pc;
+
+    // Add local tracks
+    if (localStream) localStream.getTracks().forEach(t => pc.addTrack(t, localStream));
+    if (screenStream) screenStream.getTracks().forEach(t => pc.addTrack(t, screenStream));
+
+    pc.onicecandidate = function(e) {
+        if (e.candidate && vcSocket) vcSocket.emit('ice-candidate', { to: remoteId, candidate: e.candidate.toJSON() });
+    };
+
+    pc.ontrack = function(e) {
+        const stream = e.streams[0] || new MediaStream([e.track]);
+        vcAddTile(remoteId, stream, vcNickMap[remoteId] || 'Peer', false);
+    };
+
+    pc.onconnectionstatechange = function() {
+        if (pc.connectionState === 'failed' || pc.connectionState === 'closed') {
+            vcClosePeer(remoteId);
+        }
+    };
+
+    return pc;
+}
+
+async function vcInitiateOffer(remoteId, remoteName) {
+    vcNickMap[remoteId] = remoteName || 'Peer';
+    const pc = vcGetOrCreatePeer(remoteId);
+    try {
+        const offer = await pc.createOffer();
+        await pc.setLocalDescription(offer);
+        vcSocket.emit('offer', { to: remoteId, sdp: pc.localDescription.sdp });
+    } catch(e) { console.error('[vc] offer create error', e); }
+}
+
+async function vcDrainIce(remoteId) {
+    const queue = vcIceQueue[remoteId] || [];
+    delete vcIceQueue[remoteId];
+    const pc = vcPeers[remoteId];
+    for (const c of queue) {
+        try { await pc.addIceCandidate(new RTCIceCandidate(c)); } catch(e) {}
+    }
+}
+
+function vcClosePeer(remoteId) {
+    const pc = vcPeers[remoteId];
+    if (pc) { try { pc.close(); } catch(e) {} delete vcPeers[remoteId]; }
+    delete vcIceQueue[remoteId];
+    delete vcNickMap[remoteId];
+    vcRemoveTile(remoteId);
+    vcUpdatePeerCount();
+}
+
+// ── Do the actual socket room join ──────────────────────────
+function vcDoJoin() {
+    if (!vcSocket || !vcSocket.connected) return;
+    const nick = document.getElementById('nickInput')?.value?.trim()
+              || chatDisplayName
+              || 'Anonymous';
+    vcSocket.emit('join-room', { roomId: VC_ROOM_ID, roomName: 'MangoBlox VC', name: nick });
+}
+
+// ── Public: Join call ───────────────────────────────────────
 async function vcJoin() {
     if (vcInCall) return;
 
+    // Get media
     try {
         localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-        vcCamOn = true;
+        vcCamOn = true; vcMicOn = true;
     } catch(e) {
         try {
             localStream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
-            vcCamOn = false;
+            vcCamOn = false; vcMicOn = true;
             toast('📷 No camera — joining audio only');
         } catch(e2) {
-            toast('⚠️ Camera/mic access denied — check browser permissions');
+            toast('⚠️ Camera/mic access denied');
             return;
         }
     }
 
     vcInCall = true;
-    const nick = document.getElementById('nickInput')?.value?.trim() || 'Anonymous';
+    const nick = document.getElementById('nickInput')?.value?.trim() || chatDisplayName || 'Anonymous';
 
+    // Show local tile
     vcAddTile('local', localStream, nick + ' (You)', true);
-    document.getElementById('vcJoinBtn').style.display  = 'none';
-    document.getElementById('vcCamBtn').style.display   = 'inline-block';
-    document.getElementById('vcLeaveBtn').style.display = 'inline-block';
-    vcUpdateCamBtn();
-    vcSetStatus('📹 In call — ' + nick, true);
 
-    // VC now uses MiroTalk iframe — open in the vc-pane
-    const VC_ROOM = 'mangoblox-room';
-    const vcUrl = 'https://mirotalk-webrtc-p2p-production-e1e2.up.railway.app/join?room='
-        + encodeURIComponent(VC_ROOM) + '&name=' + encodeURIComponent(nick)
-        + '&audio=1&video=1&screen=0&chat=1&hide=0&notify=0';
+    // Show controls
+    document.getElementById('vcJoinBtn').style.display   = 'none';
+    document.getElementById('vcCamBtn').style.display    = 'inline-block';
+    document.getElementById('vcMicBtn').style.display    = 'inline-block';
+    document.getElementById('vcScreenBtn').style.display = 'inline-block';
+    document.getElementById('vcHandBtn').style.display   = 'inline-block';
+    document.getElementById('vcLeaveBtn').style.display  = 'inline-block';
+    vcUpdateCamBtn(); vcUpdateMicBtn();
+    vcSetStatus('📹 Connecting…', true);
 
-    let wrap = document.getElementById('vcIframeWrap');
-    if (!wrap) {
-        const grid = document.getElementById('vcGrid');
-        grid.innerHTML = '';
-        const iframeWrap = document.createElement('div');
-        iframeWrap.id = 'vcIframeWrap';
-        iframeWrap.style.cssText = 'flex:1;overflow:hidden;';
-        const iframe = document.createElement('iframe');
-        iframe.id = 'vcIframe';
-        iframe.src = vcUrl;
-        iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
-        iframe.allow = 'camera; microphone; speaker-selection; display-capture; fullscreen; autoplay';
-        iframeWrap.appendChild(iframe);
-        // Insert before vc-controls
-        const vcControls = document.querySelector('.vc-controls');
-        document.getElementById('vcContent').insertBefore(iframeWrap, vcControls);
-    } else {
-        document.getElementById('vcIframe').src = vcUrl;
-        wrap.style.display = '';
-    }
-    vcSetStatus('📹 In call via MiroTalk', true);
+    vcConnectSocket();
+    if (vcSocket.connected) vcDoJoin();
+    // else join-ack fires after connect event calls vcDoJoin()
 }
 
-// ── Leave ───────────────────────────────────────────────────
+// ── Public: Leave call ──────────────────────────────────────
 function vcLeave() {
-    if (!vcInCall && !localStream) return;
     vcInCall = false;
-    vcCamOn  = true;
+    vcScreenOn = false;
+    vcHandRaised = false;
 
-    Object.entries(vcPeers).forEach(([id, pc]) => {
-        pc.onicecandidate = null; pc.ontrack = null; pc.onconnectionstatechange = null;
-        pc.close();
-    });
+    if (vcSocket) { try { vcSocket.emit('leave-room'); } catch(e) {} }
+
+    Object.keys(vcPeers).forEach(vcClosePeer);
     vcPeers = {};
-    for (const k in vcIceQueue) delete vcIceQueue[k];
 
-    if (localStream) { localStream.getTracks().forEach(t => t.stop()); localStream = null; }
+    if (screenStream) { screenStream.getTracks().forEach(t => t.stop()); screenStream = null; }
+    if (localStream)  { localStream.getTracks().forEach(t => t.stop());  localStream  = null; }
 
     document.getElementById('vcGrid').innerHTML = '';
-    document.getElementById('vcJoinBtn').style.display  = 'inline-block';
-    document.getElementById('vcCamBtn').style.display   = 'none';
-    document.getElementById('vcLeaveBtn').style.display = 'none';
+    document.getElementById('vcJoinBtn').style.display   = 'inline-block';
+    document.getElementById('vcCamBtn').style.display    = 'none';
+    document.getElementById('vcMicBtn').style.display    = 'none';
+    document.getElementById('vcScreenBtn').style.display = 'none';
+    document.getElementById('vcHandBtn').style.display   = 'none';
+    document.getElementById('vcLeaveBtn').style.display  = 'none';
     vcSetStatus('Not in a call', false);
+    document.getElementById('vcPeerCount').textContent = '👥 Nobody in call yet';
 
-    // Unload MiroTalk iframe
-    const vcIframe = document.getElementById('vcIframe');
-    if (vcIframe) { vcIframe.src = 'about:blank'; }
-    const vcIframeWrap = document.getElementById('vcIframeWrap');
-    if (vcIframeWrap) vcIframeWrap.style.display = 'none';
+    vcCamOn = true; vcMicOn = true;
+    vcUpdateCamBtn(); vcUpdateMicBtn();
+    const sb = document.getElementById('vcScreenBtn');
+    if (sb) { sb.textContent = '🖥️ Share Screen'; sb.classList.remove('on'); }
+    const hb = document.getElementById('vcHandBtn');
+    if (hb) { hb.textContent = '✋ Hand'; hb.classList.remove('on'); }
 }
 
-// ── Toggle cam ──────────────────────────────────────────────
+// ── Toggle camera ───────────────────────────────────────────
 async function vcToggleCam() {
     if (!localStream) return;
-    const vt = localStream.getVideoTracks()[0];
-    if (vcCamOn) {
-        if (vt) vt.enabled = false;
-        vcCamOn = false;
-    } else {
-        if (vt) { vt.enabled = true; vcCamOn = true; }
-        else {
-            try {
-                const vs = await navigator.mediaDevices.getUserMedia({ video: true });
-                const nt = vs.getVideoTracks()[0];
-                localStream.addTrack(nt);
-                Object.values(vcPeers).forEach(pc => {
-                    const s = pc.getSenders().find(s => s.track && s.track.kind === 'video');
-                    if (s) s.replaceTrack(nt); else pc.addTrack(nt, localStream);
-                });
-                vcCamOn = true;
-            } catch(e) { toast('⚠️ Could not enable camera'); return; }
-        }
-    }
+    vcCamOn = !vcCamOn;
+    localStream.getVideoTracks().forEach(t => { t.enabled = vcCamOn; });
     const lv = document.querySelector('#vc-tile-local video');
     const lm = document.querySelector('#vc-tile-local .vc-tile-muted');
     if (lv) lv.style.display = vcCamOn ? 'block' : 'none';
     if (lm) lm.style.display = vcCamOn ? 'none'  : 'flex';
     vcUpdateCamBtn();
+    if (vcSocket) vcSocket.emit('update-peer-info', { video: vcCamOn });
 }
-
 function vcUpdateCamBtn() {
     const btn = document.getElementById('vcCamBtn');
     if (!btn) return;
@@ -2758,34 +2864,130 @@ function vcUpdateCamBtn() {
     btn.classList.toggle('off', !vcCamOn);
 }
 
-// ── Tiles ───────────────────────────────────────────────────
+// ── Toggle mic ──────────────────────────────────────────────
+function vcToggleMic() {
+    if (!localStream) return;
+    vcMicOn = !vcMicOn;
+    localStream.getAudioTracks().forEach(t => { t.enabled = vcMicOn; });
+    vcUpdateMicBtn();
+    if (vcSocket) vcSocket.emit('update-peer-info', { audio: vcMicOn });
+}
+function vcUpdateMicBtn() {
+    const btn = document.getElementById('vcMicBtn');
+    if (!btn) return;
+    btn.textContent = vcMicOn ? '🎤 Mic On' : '🔇 Mic Off';
+    btn.classList.toggle('off', !vcMicOn);
+}
+
+// ── Screen sharing ──────────────────────────────────────────
+async function vcToggleScreen() {
+    if (!vcInCall) return;
+
+    if (vcScreenOn) {
+        // Stop screen share
+        if (screenStream) { screenStream.getTracks().forEach(t => t.stop()); screenStream = null; }
+        vcScreenOn = false;
+        const btn = document.getElementById('vcScreenBtn');
+        if (btn) { btn.textContent = '🖥️ Share Screen'; btn.classList.remove('on'); }
+        if (vcSocket) vcSocket.emit('screen-share-stop');
+        // Replace screen track with camera in all peers
+        const camTrack = localStream && localStream.getVideoTracks()[0];
+        Object.values(vcPeers).forEach(function(pc) {
+            const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
+            if (sender && camTrack) sender.replaceTrack(camTrack).catch(() => {});
+        });
+        toast('🖥️ Screen sharing stopped');
+        return;
+    }
+
+    // Start screen share
+    try {
+        screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    } catch(e) {
+        toast('⚠️ Screen sharing cancelled or denied');
+        return;
+    }
+
+    vcScreenOn = true;
+    const btn = document.getElementById('vcScreenBtn');
+    if (btn) { btn.textContent = '🛑 Stop Share'; btn.classList.add('on'); }
+
+    const screenTrack = screenStream.getVideoTracks()[0];
+    if (screenTrack) {
+        // Replace video track in all existing peers via renegotiation
+        for (const [remoteId, pc] of Object.entries(vcPeers)) {
+            const sender = pc.getSenders().find(s => s.track && s.track.kind === 'video');
+            if (sender) {
+                await sender.replaceTrack(screenTrack).catch(() => {});
+            } else {
+                pc.addTrack(screenTrack, screenStream);
+                // Need renegotiation
+                try {
+                    const offer = await pc.createOffer();
+                    await pc.setLocalDescription(offer);
+                    vcSocket.emit('renegotiate', { to: remoteId, sdp: pc.localDescription.sdp });
+                } catch(e) {}
+            }
+        }
+        // Auto-stop when user clicks "Stop sharing" in browser UI
+        screenTrack.onended = function() {
+            if (vcScreenOn) vcToggleScreen();
+        };
+    }
+
+    if (vcSocket) vcSocket.emit('screen-share-start');
+    toast('🖥️ Screen sharing started');
+}
+
+// ── Hand raise ──────────────────────────────────────────────
+function vcToggleHand() {
+    if (!vcInCall || !vcSocket) return;
+    vcHandRaised = !vcHandRaised;
+    vcSocket.emit(vcHandRaised ? 'hand-raise' : 'hand-lower');
+    const btn = document.getElementById('vcHandBtn');
+    if (btn) {
+        btn.textContent = vcHandRaised ? '✋ Hand (raised)' : '✋ Hand';
+        btn.classList.toggle('on', vcHandRaised);
+    }
+    if (vcHandRaised) toast('✋ Hand raised');
+}
+
+// ── Video tiles ─────────────────────────────────────────────
 function vcAddTile(id, stream, label, selfMute) {
     const grid = document.getElementById('vcGrid');
     const old  = document.getElementById('vc-tile-' + id);
     if (old) old.remove();
-    const hasV = stream && stream.getVideoTracks().length > 0 && stream.getVideoTracks()[0].enabled;
+
+    const hasV = stream && stream.getVideoTracks().length > 0;
     const tile = document.createElement('div');
-    tile.className = 'vc-tile'; tile.id = 'vc-tile-' + id;
-    tile.innerHTML = `<video autoplay playsinline ${selfMute ? 'muted' : ''}></video>
-        <div class="vc-tile-muted" style="display:${hasV ? 'none' : 'flex'}">🎤<span>cam off</span></div>
-        <div class="vc-tile-label">${sanitize(label)}</div>`;
+    tile.className = 'vc-tile';
+    tile.id        = 'vc-tile-' + id;
+    tile.innerHTML =
+        '<video autoplay playsinline' + (selfMute ? ' muted' : '') + '></video>' +
+        '<div class="vc-tile-muted" style="display:' + (hasV ? 'none' : 'flex') + '">🎤<span>cam off</span></div>' +
+        '<div class="vc-tile-label">' + sanitize(label) + '</div>' +
+        '<div class="vc-tile-emoji" id="vc-emoji-' + id + '" style="display:none"></div>';
+
     const video = tile.querySelector('video');
-    if (stream) { video.srcObject = stream; video.style.display = hasV ? 'block' : 'none'; }
+    if (stream) {
+        video.srcObject = stream;
+        video.style.display = hasV ? 'block' : 'none';
+    }
     grid.appendChild(tile);
 }
-function vcRemoveTile(id) { const el = document.getElementById('vc-tile-' + id); if (el) el.remove(); }
 
-// ── Peer helpers (stubs — VC uses MiroTalk iframe) ──────────
-function vcCreatePeer() {}
-async function vcDrainIce() {}
+function vcRemoveTile(id) {
+    const el = document.getElementById('vc-tile-' + id);
+    if (el) el.remove();
+}
 
-// ── Signal handlers (stubs — VC uses MiroTalk iframe) ───────
-function vcHandleCallList()  {}
-function vcHandlePeerJoin()  {}
-function vcHandleOffer()     {}
-function vcHandleAnswer()    {}
-function vcHandleIce()       {}
-function vcHandlePeerLeave() {}
+function vcFloatEmoji(id, emoji) {
+    const el = document.getElementById('vc-emoji-' + id);
+    if (!el) return;
+    el.textContent = emoji;
+    el.style.display = 'block';
+    setTimeout(function() { el.style.display = 'none'; }, 2500);
+}
 
 
 
