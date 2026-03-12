@@ -1455,14 +1455,6 @@ const RESERVED_NAMES = ['firetube91','admin','system','owner','mod','moderator']
 const MY_TAB         = 'tab_' + Math.random().toString(36).slice(2,8);
 const CHAT_ROOMS     = { mango:'rooms/mango', frosty:'rooms/frosty', cheese:'rooms/cheese' };
 
-let fbDb = null;
-let chatUser = null;
-let chatDisplayName = '';
-let chatOnlineInterval = null;
-let authMode = 'login';
-let chatExpanded = false;
-let pendingAttach = null;
-
 // per-channel state
 let activeRoom = 'mango';
 let activeDM = null;
